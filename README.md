@@ -10,9 +10,9 @@ Experimental Go tools and libraries for crawling a directory of Who's On First d
 package main
 
 import (
-       "flag"
-       "fmt"
 	"com.mapzen/whosonfirst"
+	"flag"
+	"fmt"
 )
 
 func main() {

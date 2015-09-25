@@ -15,13 +15,13 @@ type CrawlFunc func(path string, info os.FileInfo) error
 type CrawlInflateFunc func(path string, blob JSONBlob) error
 
 type Crawler struct {
-     Root string
+	Root string
 }
 
-func NewCrawler (path string) *Crawler {
-	 return &Crawler {
-	 	Root: path,
-	 }
+func NewCrawler(path string) *Crawler {
+	return &Crawler{
+		Root: path,
+	}
 }
 
 func (c Crawler) Crawl(cb CrawlFunc) error {

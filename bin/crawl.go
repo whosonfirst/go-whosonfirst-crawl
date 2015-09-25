@@ -1,9 +1,9 @@
 package main
 
 import (
-       "flag"
-       "fmt"
 	"com.mapzen/whosonfirst"
+	"flag"
+	"fmt"
 )
 
 func main() {
