@@ -33,6 +33,13 @@ func main() {
 }
 ```
 
+## To do
+
+* Documentation
+* Proper error handling
+* Actually filter on things ending in `.geojson`
+* Make it work with [whosonfirst.WOFFeature](https://github.com/whosonfirst/go-mapzen-whosonfirst/blob/master/src/com.mapzen/whosonfirst/place.go) or whatever that ends up being
+
 ## See also
 
 * https://github.com/MichaelTJones/walk
