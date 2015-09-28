@@ -14,17 +14,19 @@ func main() {
 	args := flag.Args()
 
 	root := args[0]
-	fmt.Println("crawl ", root)
+	fmt.Println("count files and directories in ", root)
 
-	var counter int64
+	var files int64
+	var dirs int64
 
 	callback := func(path string, info os.FileInfo) error {
 
 		if info.IsDir() {
+			dirs ++
 			return nil
 		}
 
-		counter++
+		files++
 		return nil
 	}
 
@@ -34,5 +36,5 @@ func main() {
 	_ = c.Crawl(callback)
 
 	t1 := float64(time.Since(t0)) / 1e9
-	fmt.Printf("walked %d files in %.3f seconds\n", counter, t1)
+	fmt.Printf("walked %d files (and %s dirs) in %.3f seconds\n", files, dirs, t1)
 }
