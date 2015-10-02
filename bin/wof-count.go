@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/whosonfirst"
+	"github.com/whosonfirst/crawl"
 	"flag"
 	"fmt"
 	"os"
