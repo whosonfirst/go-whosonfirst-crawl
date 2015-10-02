@@ -1,5 +1,5 @@
 *~
 pkg
-src/github.com
-bin/crawl
-bin/count
+src/github.com/MichaelTJones
+bin/wof-crawl
+bin/wof-count

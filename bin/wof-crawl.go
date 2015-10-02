@@ -1,7 +1,7 @@
 package main
 
 import (
-	"com.mapzen/whosonfirst"
+	"github.com/whosonfirst"
 	"flag"
 	"fmt"
 )

@@ -2,7 +2,7 @@ path:
 	export GOPATH=`pwd`
 
 count:  path
-	go build -o bin/count bin/count.go
+	go build -o bin/wof-count bin/wof-count.go
 
 crawl:  path
-	go build -o bin/crawl bin/crawl.go
+	go build -o bin/wof-crawl bin/wof-crawl.go

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"com.mapzen/whosonfirst"
+	"github.com/whosonfirst"
 	"flag"
 	"fmt"
 	"os"
@@ -36,5 +36,5 @@ func main() {
 	_ = c.Crawl(callback)
 
 	t1 := float64(time.Since(t0)) / 1e9
-	fmt.Printf("walked %d files (and %s dirs) in %.3f seconds\n", files, dirs, t1)
+	fmt.Printf("walked %d files (and %d dirs) in %.3f seconds\n", files, dirs, t1)
 }
