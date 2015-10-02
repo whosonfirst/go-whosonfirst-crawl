@@ -1,4 +1,4 @@
-package whosonfirst
+package crawl
 
 import (
 	"encoding/json"
