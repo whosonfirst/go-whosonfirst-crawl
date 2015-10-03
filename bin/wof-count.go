@@ -1,9 +1,9 @@
 package main
 
 import (
-	"whosonfirst/crawl"
 	"flag"
 	"fmt"
+	crawl "github.com/whosonfirst/go-whosonfirst-crawl/whosonfirst"
 	"os"
 	"time"
 )
@@ -22,7 +22,7 @@ func main() {
 	callback := func(path string, info os.FileInfo) error {
 
 		if info.IsDir() {
-			dirs ++
+			dirs++
 			return nil
 		}
 
@@ -32,7 +32,7 @@ func main() {
 
 	t0 := time.Now()
 
-	c := whosonfirst.NewCrawler(root)
+	c := crawl.NewCrawler(root)
 	_ = c.Crawl(callback)
 
 	t1 := float64(time.Since(t0)) / 1e9

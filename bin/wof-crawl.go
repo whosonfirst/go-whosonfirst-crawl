@@ -1,9 +1,9 @@
 package main
 
 import (
-	"whosonfirst/crawl"
 	"flag"
 	"fmt"
+	crawl "github.com/whosonfirst/go-whosonfirst-crawl/whosonfirst"
 )
 
 func main() {
@@ -14,11 +14,11 @@ func main() {
 	root := args[0]
 	fmt.Println("crawl ", root)
 
-	callback := func(path string, b whosonfirst.JSONBlob) error {
+	callback := func(path string, b crawl.JSONBlob) error {
 		fmt.Println("inflated ", path)
 		return nil
 	}
 
-	c := whosonfirst.NewCrawler(root)
+	c := crawl.NewCrawler(root)
 	_ = c.CrawlAndInflate(callback)
 }
