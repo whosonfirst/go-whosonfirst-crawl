@@ -1,7 +1,7 @@
 self:
-        if test -d src/github.com/whosonfirst/go-whosonfirst-crawl; then rm -rf src/github.com/whosonfirst/go-whosonfirst-crawl; fi
-        mkdir src/github.com/whosonfirst/go-whosonfirst-crawl
-        cp -r whosonfirst src/github.com/whosonfirst/go-whosonfirst-crawl/whosonfirst
+	if test -d src/github.com/whosonfirst/go-whosonfirst-crawl; then rm -rf src/github.com/whosonfirst/go-whosonfirst-crawl; fi
+	mkdir -p src/github.com/whosonfirst/go-whosonfirst-crawl
+	cp -r whosonfirst src/github.com/whosonfirst/go-whosonfirst-crawl/whosonfirst
 
 deps:   self
 	go get -u "github.com/MichaelTJones/walk"
