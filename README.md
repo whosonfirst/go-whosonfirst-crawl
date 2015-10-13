@@ -1,6 +1,6 @@
 # go-mapzen-whosonfirst-crawl
 
-Experimental Go tools and libraries for crawling a directory of Who's On First data
+Go tools and libraries for crawling a directory of Who's On First data
 
 ## Usage
 
@@ -10,9 +10,9 @@ Experimental Go tools and libraries for crawling a directory of Who's On First d
 package main
 
 import (
-	"com.mapzen/whosonfirst"
 	"flag"
 	"fmt"
+	"github.com/whosonfirst/go-whosonfirst-crawl"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	root := args[0]
 	fmt.Println("crawl ", root)
 
-	callback := func(path string, b whosonfirst.JSONBlob) error {
+	callback := func(path string, b crawl.JSONBlob) error {
 		fmt.Println("inflated ", path)
 		return nil
 	}
@@ -37,8 +37,7 @@ func main() {
 
 * Documentation
 * Proper error handling
-* Actually filter on things ending in `.geojson`
-* Make it work with [whosonfirst.WOFFeature](https://github.com/whosonfirst/go-mapzen-whosonfirst/blob/master/src/com.mapzen/whosonfirst/place.go) or whatever that ends up being
+* Remove GeoJSON specific stuff (or at least move it in to its own little playground)
 
 ## See also
 

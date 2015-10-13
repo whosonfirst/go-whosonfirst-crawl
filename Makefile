@@ -1,15 +1,18 @@
-self:
-        if test -d src/github.com/whosonfirst/go-whosonfirst-crawl; then rm -rf src/github.com/whosonfirst/go-whosonfirst-crawl; fi
-        mkdir src/github.com/whosonfirst/go-whosonfirst-crawl
-        cp -r whosonfirst src/github.com/whosonfirst/go-whosonfirst-crawl/whosonfirst
+prep:
+	if test -d pkg; then rm -rf pkg; fi
+
+self:	prep
+	if test -d src/github.com/whosonfirst/go-whosonfirst-crawl; then rm -rf src/github.com/whosonfirst/go-whosonfirst-crawl; fi
+	mkdir -p src/github.com/whosonfirst/go-whosonfirst-crawl
+	cp crawl.go src/github.com/whosonfirst/go-whosonfirst-crawl/crawl.go
 
 deps:   self
 	go get -u "github.com/MichaelTJones/walk"
 
 fmt:
-	go fmt bin/wof-count.go
-	go fmt bin/wof-crawl.go
-	go fmt whosonfirst/crawl.go
+	go fmt bin/*.go
+	go fmt bin/*.go
+	go fmt *.go
 
 count:  self
 	go build -o bin/wof-count bin/wof-count.go

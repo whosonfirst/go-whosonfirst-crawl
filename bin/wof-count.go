@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	crawl "github.com/whosonfirst/go-whosonfirst-crawl/whosonfirst"
+	"github.com/whosonfirst/go-whosonfirst-crawl"
 	"os"
 	"time"
 )
