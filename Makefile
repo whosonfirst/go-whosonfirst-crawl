@@ -7,15 +7,16 @@ self:	prep
 	cp crawl.go src/github.com/whosonfirst/go-whosonfirst-crawl/crawl.go
 
 deps:   self
-	go get -u "github.com/MichaelTJones/walk"
+	go get -u "github.com/whosonfirst/walk"
 
 fmt:
-	go fmt bin/*.go
-	go fmt bin/*.go
+	go fmt cmd/*.go
 	go fmt *.go
 
 count:  self
-	go build -o bin/wof-count bin/wof-count.go
+	go build -o bin/wof-count cmd/wof-count.go
 
 crawl:  self
-	go build -o bin/wof-crawl bin/wof-crawl.go
+	go build -o bin/wof-crawl cmd/wof-crawl.go
+
+bin: crawl count

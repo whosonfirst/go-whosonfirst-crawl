@@ -5,13 +5,18 @@ import (
 	"fmt"
 	"github.com/whosonfirst/go-whosonfirst-crawl"
 	"os"
+	"runtime"
 	"time"
 )
 
 func main() {
 
+     	var procs = flag.Int("processes", runtime.NumCPU() * 2, "The number of concurrent processes to use")
+
 	flag.Parse()
 	args := flag.Args()
+
+	runtime.GOMAXPROCS(*procs)
 
 	root := args[0]
 	fmt.Println("count files and directories in ", root)

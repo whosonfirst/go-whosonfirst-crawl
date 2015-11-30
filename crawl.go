@@ -3,7 +3,7 @@ package crawl
 import (
 	"encoding/json"
 	"fmt"
-	walk "github.com/MichaelTJones/walk"
+	walk "github.com/whosonfirst/walk"
 	"io/ioutil"
 	"os"
 )
