@@ -6,17 +6,18 @@ self:	prep
 	mkdir -p src/github.com/whosonfirst/go-whosonfirst-crawl
 	cp crawl.go src/github.com/whosonfirst/go-whosonfirst-crawl/crawl.go
 
+rmdeps:
+	if test -d src; then rm -rf src; fi 
+
+build:	rmdeps deps fmt bin
+
 deps:   self
-	go get -u "github.com/whosonfirst/walk"
+	@GOPATH=$(shell pwd) go get -u "github.com/whosonfirst/walk"
 
 fmt:
 	go fmt cmd/*.go
 	go fmt *.go
 
-count:  self
-	go build -o bin/wof-count cmd/wof-count.go
-
-crawl:  self
-	go build -o bin/wof-crawl cmd/wof-crawl.go
-
-bin: crawl count
+bin:	self
+	@GOPATH=$(shell pwd) go build -o bin/wof-count cmd/wof-count.go
+	@GOPATH=$(shell pwd) go build -o bin/wof-crawl-dtwt cmd/wof-crawl-dtwt.go

@@ -4,34 +4,7 @@ Go tools and libraries for crawling a directory of Who's On First data
 
 ## Usage
 
-## Example
-
-```
-package main
-
-import (
-	"flag"
-	"fmt"
-	"github.com/whosonfirst/go-whosonfirst-crawl"
-)
-
-func main() {
-
-	flag.Parse()
-	args := flag.Args()
-
-	root := args[0]
-	fmt.Println("crawl ", root)
-
-	callback := func(path string, b crawl.JSONBlob) error {
-		fmt.Println("inflated ", path)
-		return nil
-	}
-
-	c := whosonfirst.NewCrawler(root)
-	_ = c.CrawlAndInflate(callback)
-}
-```
+_Please rewrite me..._
 
 ## To do
 
