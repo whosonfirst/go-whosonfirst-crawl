@@ -36,7 +36,7 @@ func main() {
 		t2 := time.Since(t1)
 
 		if *verbose {
-			fmt.Printf("failed to do this with %s: %v\n", abs_path, t2)
+			fmt.Printf("time to do this with %s: %v\n", abs_path, t2)
 		}
 
 		if err != nil {
