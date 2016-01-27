@@ -17,12 +17,12 @@ import (
 
 func main() {
 
-     dothis := flag.String("do-this", "", "...")
-     fromthere := flag.String("from-there", "", "...")
-     procs := flag.Int("procs", 200, "...")
-     verbose := flag.Bool("verbose", false, "...")
-     
-     flag.Parse()
+	dothis := flag.String("do-this", "", "...")
+	fromthere := flag.String("from-there", "", "...")
+	procs := flag.Int("procs", 200, "...")
+	verbose := flag.Bool("verbose", false, "...")
+
+	flag.Parse()
 
 	runtime.GOMAXPROCS(*procs)
 
@@ -36,16 +36,16 @@ func main() {
 		t2 := time.Since(t1)
 
 		if *verbose {
-		   fmt.Printf("failed to do this with %s: %v\n", abs_path, t2) 	 
+			fmt.Printf("failed to do this with %s: %v\n", abs_path, t2)
 		}
 
 		if err != nil {
-		   fmt.Printf("failed to do this with %s, because %v (%s)\n", abs_path, err, out)
-		   return err
+			fmt.Printf("failed to do this with %s, because %v (%s)\n", abs_path, err, out)
+			return err
 		}
 
 		if *verbose {
-		   fmt.Printf("%s", out)
+			fmt.Printf("%s", out)
 		}
 
 		return nil
