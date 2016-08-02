@@ -11,7 +11,8 @@ import (
 
 func main() {
 
-	var procs = flag.Int("processes", runtime.NumCPU()*2, "The number of concurrent processes to use")
+	procs := flag.Int("processes", runtime.NumCPU()*2, "The number of concurrent processes to use")
+	nfs := flag.Bool("nfs", false, "...")
 
 	flag.Parse()
 	args := flag.Args()
@@ -38,6 +39,8 @@ func main() {
 	t0 := time.Now()
 
 	c := crawl.NewCrawler(root)
+	c.NFS = *nfs
+
 	_ = c.Crawl(callback)
 
 	t1 := float64(time.Since(t0)) / 1e9
