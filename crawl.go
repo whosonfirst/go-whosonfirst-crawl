@@ -1,7 +1,6 @@
 package crawl
 
 import (
-       "errors"
 	"fmt"
 	walk "github.com/whosonfirst/walk"
 	"os"
@@ -11,13 +10,13 @@ type CrawlFunc func(path string, info os.FileInfo) error
 
 type Crawler struct {
 	Root string
-	NFS bool
+	NFS  bool
 }
 
 func NewCrawler(path string) *Crawler {
 	return &Crawler{
 		Root: path,
-		NFS: false,
+		NFS:  false,
 	}
 }
 
@@ -37,7 +36,7 @@ func (c Crawler) Crawl(cb CrawlFunc) error {
 		return nil
 	}
 
-	var err errors.Error
+	var err error
 
 	if c.NFS {
 		err = walk.WalkNFS(c.Root, walker)
