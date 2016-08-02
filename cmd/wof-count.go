@@ -12,7 +12,7 @@ import (
 func main() {
 
 	procs := flag.Int("processes", runtime.NumCPU()*2, "The number of concurrent processes to use")
-	nfs := flag.Bool("nfs", false, "...")
+	nfs_kludge := flag.Bool("nfs-kludge", false, "Enable the (walk.go) NFS kludge to ignore 'readdirent: errno' 523 errors")
 
 	flag.Parse()
 	args := flag.Args()
@@ -39,7 +39,7 @@ func main() {
 	t0 := time.Now()
 
 	c := crawl.NewCrawler(root)
-	c.NFS = *nfs
+	c.NFSKludge = *nfs_kludge
 
 	_ = c.Crawl(callback)
 

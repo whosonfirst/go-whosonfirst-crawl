@@ -9,14 +9,14 @@ import (
 type CrawlFunc func(path string, info os.FileInfo) error
 
 type Crawler struct {
-	Root string
-	NFS  bool
+	Root      string
+	NFSKludge bool // https://github.com/whosonfirst/walk/tree/master#walkwalkwithnfskludge
 }
 
 func NewCrawler(path string) *Crawler {
 	return &Crawler{
-		Root: path,
-		NFS:  false,
+		Root:      path,
+		NFSKludge: false,
 	}
 }
 
@@ -38,8 +38,10 @@ func (c Crawler) Crawl(cb CrawlFunc) error {
 
 	var err error
 
-	if c.NFS {
-		err = walk.WalkNFS(c.Root, walker)
+	// See above
+
+	if c.NFSKludge {
+		err = walk.WalkWithNFSKludge(c.Root, walker)
 	} else {
 		err = walk.Walk(c.Root, walker)
 	}
