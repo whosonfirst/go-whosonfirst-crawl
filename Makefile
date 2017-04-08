@@ -21,3 +21,4 @@ fmt:
 bin:	self
 	@GOPATH=$(shell pwd) go build -o bin/wof-count cmd/wof-count.go
 	@GOPATH=$(shell pwd) go build -o bin/wof-crawl-dtwt cmd/wof-crawl-dtwt.go
+	@GOPATH=$(shell pwd) go build -o bin/wof-crawl-validate cmd/wof-crawl-validate.go
