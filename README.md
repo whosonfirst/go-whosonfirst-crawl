@@ -30,6 +30,8 @@ validate JSON files in /usr/local/data/whosonfirst-data/data
 2017/04/08 00:32:58 okay 504914 errors 1
 ```
 
+_Note: This only validates JSON-iness and not WOF-iness. Maybe someday it will do the latter but today it does not._
+
 ## See also
 
 * https://github.com/whosonfirst/walk
