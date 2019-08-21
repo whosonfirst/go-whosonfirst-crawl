@@ -1,5 +1,5 @@
 module github.com/whosonfirst/go-whosonfirst-crawl
 
-require github.com/whosonfirst/walk v0.0.0-20160802000000-c0a349674b73681a7272f5ce6ade8ea28055059f
+require golang.org/x/sync v0.0.0-20190423024810-112230192c58
 
 go 1.12
