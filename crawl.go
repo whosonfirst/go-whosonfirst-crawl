@@ -66,7 +66,7 @@ func (c Crawler) CrawlWithChannels(ctx context.Context, cb CrawlFunc, processing
 		}
 
 		if err != nil {
-			error_ch <- NewCrawlError(path, err)
+			error_ch <- NewWalkError(path, err)
 			return nil
 		}
 

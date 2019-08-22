@@ -17,6 +17,19 @@ func (e *CrawlError) String() string {
 	return fmt.Sprintf("Failed crawl for %s: %v", e.Path, e.Details)
 }
 
+type WalkError struct {
+	Path    string
+	Details error
+}
+
+func (e *WalkError) Error() string {
+	return e.String()
+}
+
+func (e *WalkError) String() string {
+	return fmt.Sprintf("Failed walk for %s: %v", e.Path, e.Details)
+}
+
 type CallbackError struct {
 	Path    string
 	Details error
@@ -33,6 +46,16 @@ func (e *CallbackError) String() string {
 func NewCrawlError(path string, details error) *CrawlError {
 
 	err := CrawlError{
+		Path:    path,
+		Details: details,
+	}
+
+	return &err
+}
+
+func NewWalkError(path string, details error) *WalkError {
+
+	err := WalkError{
 		Path:    path,
 		Details: details,
 	}
