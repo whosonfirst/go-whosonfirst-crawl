@@ -7,6 +7,11 @@ import (
 	"os"
 )
 
+type ProcessingRequest struct {
+	Path  string
+	Ready chan bool
+}
+
 type CrawlFunc func(path string, info os.FileInfo) error
 
 type Crawler struct {
@@ -36,7 +41,7 @@ func (c Crawler) CrawlWithContext(ctx context.Context, cb CrawlFunc) error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	processing_ch := make(chan string)
+	processing_ch := make(chan *ProcessingRequest)
 	error_ch := make(chan error)
 	done_ch := make(chan bool)
 
@@ -46,15 +51,15 @@ func (c Crawler) CrawlWithContext(ctx context.Context, cb CrawlFunc) error {
 		select {
 		case <-done_ch:
 			return nil
-		case <-processing_ch:
-			// pass
+		case req := <-processing_ch:
+			req.Ready <- true
 		case err := <-error_ch:
 			return err
 		}
 	}
 }
 
-func (c Crawler) CrawlWithChannels(ctx context.Context, cb CrawlFunc, processing_ch chan string, error_ch chan error, done_ch chan bool) {
+func (c Crawler) CrawlWithChannels(ctx context.Context, cb CrawlFunc, processing_ch chan *ProcessingRequest, error_ch chan error, done_ch chan bool) {
 
 	defer func() {
 		done_ch <- true
@@ -83,7 +88,23 @@ func (c Crawler) CrawlWithChannels(ctx context.Context, cb CrawlFunc, processing
 			return nil
 		}
 
-		processing_ch <- path
+		ready_ch := make(chan bool)
+		ready := false
+
+		processing_ch <- &ProcessingRequest{Path: path, Ready: ready_ch}
+
+		for {
+			select {
+			case <-ready_ch:
+				ready = true
+			default:
+				// log.Println("WAITING")
+			}
+
+			if ready {
+				break
+			}
+		}
 
 		err = cb(path, info)
 
