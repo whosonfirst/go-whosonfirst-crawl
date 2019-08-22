@@ -4,17 +4,13 @@ import (
 	"flag"
 	"fmt"
 	"github.com/whosonfirst/go-whosonfirst-crawl"
+	"log"
 	"os"
+	"sync/atomic"
 	"time"
 )
 
-func main() {
-
-	flag.Parse()
-	args := flag.Args()
-
-	root := args[0]
-	fmt.Println("count files and directories in ", root)
+func do_crawl(root string) error {
 
 	var files int64
 	var dirs int64
@@ -22,19 +18,39 @@ func main() {
 	callback := func(path string, info os.FileInfo) error {
 
 		if info.IsDir() {
-			dirs++
+			atomic.AddInt64(&dirs, 1)
 			return nil
 		}
 
-		files++
+		atomic.AddInt64(&files, 1)
 		return nil
 	}
 
+	fmt.Println("count files and directories in ", root)
+
 	t0 := time.Now()
 
-	c := crawl.NewCrawler(root)
-	_ = c.Crawl(callback)
+	defer func() {
+		t1 := float64(time.Since(t0)) / 1e9
+		fmt.Printf("walked %d files (and %d dirs) in %.3f seconds\n", files, dirs, t1)
+	}()
 
-	t1 := float64(time.Since(t0)) / 1e9
-	fmt.Printf("walked %d files (and %d dirs) in %.3f seconds\n", files, dirs, t1)
+	c := crawl.NewCrawler(root)
+	return c.Crawl(callback)
+}
+
+func main() {
+
+	flag.Parse()
+
+	for _, root := range flag.Args() {
+
+		err := do_crawl(root)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+	}
+
 }
