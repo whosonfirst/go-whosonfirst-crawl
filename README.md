@@ -12,10 +12,6 @@ _Please rewrite me..._
 * Proper error handling
 * Remove GeoJSON specific stuff (or at least move it in to its own little playground)
 
-## Caveats
-
-This package relies on [a fork of the origin walk package](https://github.com/whosonfirst/walk) that relies on `runtime.GOMAXPROCS` to determine the number of concurrent processes used to crawl a directory tree.
-
 ## Tools
 
 ### wof-crawl-validate
