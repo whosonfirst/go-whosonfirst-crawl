@@ -62,7 +62,7 @@ func (c Crawler) CrawlWithContextAndRequestHandler(ctx context.Context, cb Crawl
 		case <-done_ch:
 			return nil
 		case req := <-processing_ch:
-			req.Ready <- req_handler(req)
+			req.Ready <- req_handler(req)	// see notes about "processing requests" in CrawlWithChannels
 		case err := <-error_ch:
 			return err
 		}
