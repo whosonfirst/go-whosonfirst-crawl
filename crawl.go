@@ -2,19 +2,20 @@ package crawl
 
 import (
 	"context"
-	"os"
-	"path/filepath"
 	"runtime"
 
+	"github.com/karrick/godirwalk"
 	"golang.org/x/sync/errgroup"
 )
 
-type CrawlFunc func(path string, info os.FileInfo) error
+type CrawlFunc func(path string, isDirectory bool) error
 
 type Crawler struct {
 	Root                string
 	CrawlDirectories    bool
 	CallbackConcurrency uint
+	LexigraphicalSort   bool
+	FollowSymbolicLinks bool
 }
 
 func NewCrawler(path string) *Crawler {
@@ -24,12 +25,14 @@ func NewCrawler(path string) *Crawler {
 		Root:                path,
 		CrawlDirectories:    false,
 		CallbackConcurrency: cbConcurrency,
+		LexigraphicalSort:   false,
+		FollowSymbolicLinks: false,
 	}
 }
 
 type pathInfo struct {
-	path string
-	info os.FileInfo
+	path        string
+	isDirectory bool
 }
 
 // Crawl walks through everything in Root, calling the provided callback
@@ -48,16 +51,12 @@ func (c Crawler) Crawl(cb CrawlFunc) error {
 	}
 
 	g.Go(func() error {
-		walker := func(path string, info os.FileInfo, err error) error {
-			if err != nil {
-				return err
-			}
-
-			if info.IsDir() && !c.CrawlDirectories {
+		walker := func(path string, directoryEntry *godirwalk.Dirent) error {
+			if directoryEntry.IsDir() && !c.CrawlDirectories {
 				return nil
 			}
 
-			p := &pathInfo{path: path, info: info}
+			p := &pathInfo{path: path, isDirectory: directoryEntry.IsDir()}
 
 			select {
 			case pathChan <- p:
@@ -68,7 +67,13 @@ func (c Crawler) Crawl(cb CrawlFunc) error {
 			}
 		}
 
-		err := filepath.Walk(c.Root, walker)
+		opts := &godirwalk.Options{
+			Callback:            walker,
+			Unsorted:            !c.LexigraphicalSort,
+			FollowSymbolicLinks: c.FollowSymbolicLinks,
+		}
+
+		err := godirwalk.Walk(c.Root, opts)
 		if err != nil {
 			return err
 		}
@@ -95,7 +100,7 @@ func startCallbackWorker(ctx context.Context, g *errgroup.Group, pathChan chan *
 					return nil
 				}
 
-				err := cb(p.path, p.info)
+				err := cb(p.path, p.isDirectory)
 				if err != nil {
 					return err
 				}

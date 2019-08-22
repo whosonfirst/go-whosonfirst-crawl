@@ -23,8 +23,8 @@ func main() {
 	var files int64
 	var dirs int64
 
-	callback := func(path string, info os.FileInfo) error {
-		if info.IsDir() {
+	callback := func(path string, isDirectory bool) error {
+		if isDirectory {
 			atomic.AddInt64(&dirs, 1)
 			return nil
 		}
